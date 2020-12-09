@@ -4,6 +4,8 @@ import { getAllAnswers, getAnswersById } from "../actions/index";
 const answersReducer = createSlice({
     name: "answersRequest",
     initialState: {
+        questionsFetchError: null,
+        questionsFetchStatus: "idle",
         allAnswers: null,
         answersById: null,
     },
