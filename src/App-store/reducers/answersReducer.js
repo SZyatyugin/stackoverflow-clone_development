@@ -1,19 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllAnswers, getAnswersById } from "../actions/index";
+import { getAnswersById } from "../../App-services";
 
 const answersReducer = createSlice({
     name: "answersRequest",
     initialState: {
         questionsFetchError: null,
         questionsFetchStatus: "idle",
-        allAnswers: null,
-        answersById: null,
+        answersById: [],
     },
     reducers: {},
     extraReducers: {
-        [getAllAnswers.fulfilled]: (state, action) => {
-            state.data = action.payload;
-        },
         [getAnswersById.fulfilled]: (state, action) => {
             state.answersById = action.payload;
         },

@@ -1,16 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllQuestions } from "../actions/index";
+import {
+    getAllQuestions,
+    getQuestionById,
+    getCommentsForQuestionById,
+} from "../../App-services";
 const questionsReducer = createSlice({
     name: "questionsReducer",
     initialState: {
-        allQuestions: null,
-        questionsId: null,
+        allQuestions: [],
+        question: {},
+        comments: [],
     },
     reducers: {},
     extraReducers: {
         [getAllQuestions.fulfilled]: (state, action) => {
-            console.log(action);
             state.allQuestions = action.payload;
+        },
+        [getQuestionById.fulfilled]: (state, action) => {
+            state.question = action.payload;
+        },
+        [getCommentsForQuestionById.fulfilled]: (state, action) => {
+            state.comments = action.payload;
         },
     },
 });

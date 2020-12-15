@@ -1,6 +1,3 @@
 const AppHOC = () => {
-    return () => {
-
-        
-    };
+    return () => {};
 };

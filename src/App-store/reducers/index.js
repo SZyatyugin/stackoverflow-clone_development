@@ -1,4 +1,5 @@
 import tokenReducer from "./tokenReducer";
 import answersReducer from "./answersReducer";
 import questionsReducer from "./questionsReducer";
-export { tokenReducer, answersReducer, questionsReducer };
+import filterReducer from "./filterReducer";
+export { tokenReducer, answersReducer, questionsReducer, filterReducer };

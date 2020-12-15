@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 const AppHeader = (props) => {
     let { isLoggedIn } = props;
@@ -8,9 +9,11 @@ const AppHeader = (props) => {
         <div className="app-header">
             <div className="container">
                 <div className="app-header__wrapper">
-                    <div className="app-header__title">
-                        <h2>Stackoveflow Clone</h2>
-                    </div>
+                    <Link to="/">
+                        <div className="app-header__title">
+                            <h2>Stackoveflow Clone</h2>
+                        </div>
+                    </Link>
                     <div className="app-header__search">
                         <form>
                             <input

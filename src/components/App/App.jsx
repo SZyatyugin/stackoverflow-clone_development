@@ -1,25 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppHeader from "../App-header";
 import AppAuthHandler from "../App-authHandler";
-import { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./App.scss";
 import AppQuestionsList from "../App-questions-list";
-import { useDispatch } from "react-redux";
-import { getAllQuestions } from "../../App-store/actions";
+import AppQuestion from "../App-question";
 
 const App = () => {
-    let dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getAllQuestions());
-    }, []);
     return (
         <Router>
             <div id="App">
-                <Route path="?code=?" component={AppAuthHandler} />
                 <AppHeader />
-                <AppQuestionsList />
+                <Switch>
+                    <Route path="?code=?" component={AppAuthHandler} />
+                    <Route exact path="/" component={AppQuestionsList} />
+                    <Route path="/questions/:id" component={AppQuestion} />
+                </Switch>
             </div>
         </Router>
     );

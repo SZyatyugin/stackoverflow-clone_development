@@ -1,0 +1,114 @@
+a {
+    text-decoration: none;
+    color: unset;
+}
+.app-questions-section {
+    max-width: 1000px;
+    margin: 15px auto;
+}
+
+.app-questions-section__title {
+    font-size: 2.076rem;
+}
+
+.question-filters {
+    display: flex;
+    justify-content: flex-end;
+
+    .filters-item {
+        border: 1px solid grey;
+        padding: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .filters-item.active {
+        background-color: lightgray;
+    }
+}
+.questions-list__item {
+    border-top: 1px solid lightgray;
+}
+.questions-list__item:last-child {
+    border-bottom: 1px solid lightgray;
+}
+.question-item {
+    display: flex;
+    padding: 15px;
+}
+.question-item__stats {
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 12px;
+    align-items: center;
+}
+.question-item__section {
+    flex: 1 0;
+    margin-left: 25px;
+}
+.question-item__stats-elem {
+    padding: 10px;
+    height: fit-content;
+    & > * {
+        text-align: center;
+    }
+}
+.question-item__stats-elem.active {
+    border: 1px solid #5eba7d;
+    color: #5eba7d;
+    border-radius: 5px;
+}
+.question-item__stats-elem.answered {
+    background-color: #5eba7d;
+    color: white;
+}
+.question__item-tags {
+    flex: 1 0;
+}
+.item-tag {
+    display: inline-block;
+    background-color: #e1ecf4;
+    padding: 8px;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: 13px;
+    margin-top: 2px;
+}
+.question-item__info {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: center;
+}
+.question-item__user {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+.question__user-reputation {
+    font-weight: bold;
+    margin-left: 10px;
+}
+.question__date {
+    color: lightgray;
+}
+.question__user {
+    font-family: "Montserrat-Medium";
+    margin-left: 10px;
+}
+.item-tag + .item-tag {
+    margin-left: 10px;
+}
+.arrow-up,
+.arrow-down {
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.arrow-up {
+    background-image: url("../../assets/images/sort-up.png");
+}
+.arrow-down {
+    background-image: url("../../assets/images/sort-down.png");
+}

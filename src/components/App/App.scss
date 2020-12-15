@@ -1,2 +1,28 @@
 @import "./reset";
 @import "../App-header/App-header";
+@import "../App-questions-list/appQuestionList";
+
+@font-face {
+    font-family: "Montserrat-ExtraLight";
+    src: url("../../assets/fonts/Montserrat-ExtraLight.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("../../assets/fonts/Montserrat-Light.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat-Medium";
+    src: url("../../assets/fonts/Montserrat-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../../assets/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat-SemiBold";
+    src: url("../../assets/fonts/Montserrat-SemiBold.ttf");
+}
