@@ -1,0 +1,10 @@
+.app-navigation {
+    width: 100px;
+    border-right: 1px solid lightgray;
+}
+.app-navigation__wrapper {
+    margin-top: 50px;
+}
+.app-navigation__item + .app-navigation__item {
+    margin-top: 30px;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
+
 const AppQuestionsListItems = () => {
     let allQuestions = useSelector((store) => {
         return store.questionsReducer.allQuestions;
@@ -51,7 +52,9 @@ const AppQuestionsListItems = () => {
                                 {elem.tags.map((elem, index) => {
                                     return (
                                         <div key={index} className="item-tag">
-                                            {elem}
+                                            <Link to={`/questions/tag/${elem}`}>
+                                                {elem}
+                                            </Link>
                                         </div>
                                     );
                                 })}

@@ -38,13 +38,15 @@ export default class AppRegistrationServices extends React.Component {
             body: qs.stringify(params),
         })
             .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `Sorry. We've got an error. Response status ${response.status}. It's a bad request`
+                    );
+                }
                 return response.json();
             })
             .then((data) => {
                 console.log(data);
-            })
-            .catch((error) => {
-                console.log(error);
             });
     }
 }

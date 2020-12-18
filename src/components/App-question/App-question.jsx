@@ -1,58 +1,52 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import {
-    getQuestionById,
-    getCommentsForQuestionById,
-} from "../../App-services";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import AppQuestionComments from "../App-question-comments";
+import { getQuestionById } from "../../App-services";
 let AppQuestion = (props) => {
-    let { question, comments } = props;
-    console.log(question);
-    console.log(comments);
+    let { question, id } = props;
     let dispatch = useDispatch();
-    let match = useRouteMatch();
     useEffect(() => {
-        dispatch(getQuestionById(match.params.id));
-        dispatch(getCommentsForQuestionById(match.params.id));
-    }, [match.params.id]);
+        dispatch(getQuestionById(id));
+    }, [id]);
 
     return (
-        <div className="container">
-            <div className="app-question">
-                <div className="app-question__header">
-                    <div className="app-question__title">
-                        <h2>{question.title}</h2>
+        <div className="question-page__question">
+            <div className="question-header">
+                <div className="question-title">
+                    <h2>{question.title}</h2>
+                </div>
+                <div className="question-stats">
+                    <div className="question-stats__created">
+                        <span>Asked </span>
+                        {question.creation_date}
                     </div>
-                    <div className="app-question__stats">
-                        <div className="app-question__stats-created">
-                            <span>Asked</span>
-                            {question.creation_date}
-                        </div>
-                        <div className="app-question__stats-active">
-                            <span>Active</span>
-                            {question.last_activity_date}
-                        </div>
-                        <div className="app-question__stats-viewed">
-                            <span>Viewed</span>
-                            {question.view_count}
-                        </div>
+                    <div className="question-stats__active">
+                        <span>Active </span>
+                        {question.last_activity_date}
+                    </div>
+                    <div className="question-stats__viewed">
+                        <span>Viewed </span>
+                        {question.view_count}
+                        <span> times</span>
                     </div>
                 </div>
-                <div className="app-question__section">
-                    <div className="app-question__section-vote">
-                        <div className="app-question__section-upvote"></div>
-                        <div className="app-question__section-">
-                            {question.score}
-                        </div>
-                        <div className="app-question__section-downvote"></div>
+            </div>
+            <div className="question-page__question-section">
+                <div className="question-page__section-vote">
+                    <div className="question-page__section-upvote arrow-up"></div>
+                    <div className="question-page__section-score ">
+                        {question.score}
                     </div>
-                    <div
-                        className="app-question__section-description"
-                        dangerouslySetInnerHTML={{ __html: question.body }}
-                    ></div>
+                    <div className="question-page__section-downvote arrow-down"></div>
+                </div>
+                <div
+                    className="question-page__section-description"
+                    dangerouslySetInnerHTML={{ __html: question.body }}
+                ></div>
+                <div className="question-page__section-footer">
                     <div className="app-question__tags">
                         {question.tags?.map((elem, index) => {
                             return (
@@ -62,48 +56,42 @@ let AppQuestion = (props) => {
                             );
                         })}
                     </div>
-                    <div className="app-question__user">
-                        <div className="app-question__user-img">
-                            <img src={question.user_profile_image}></img>
-                        </div>
-                        <div className="app-question__user-info">
-                            <div className="app-question__user-name">
-                                {question.user_profile_name}
+                    <div className="question-page__user">
+                        <Link to={`/user/${question.user_id}`}>
+                            <div className="question-page__user-img">
+                                <img src={question.user_profile_image}></img>
                             </div>
-                            <div className="app-question__user-reputation">
+                        </Link>
+                        <div className="question-page__user-info">
+                            <Link to={`/user/${question.user_id}`}>
+                                <div className="question-page__user-name">
+                                    {question.user_profile_name}
+                                </div>
+                            </Link>
+                            <div
+                                className="question-page__user-reputation"
+                                title="reputation score"
+                            >
                                 {question.owner_reputation}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="app-question__comments">
-                    {comments.map((elem, index) => {
-                        return (
-                            <div className="app-question__comment" key={index}>
-                                <div className="app-question__comment-description">
-                                    {elem.body} -{" "}
-                                    <span>{elem.owner_display_name}</span>
-                                    <span>{elem.creation_date}</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
             </div>
+            <AppQuestionComments id={id} />
         </div>
     );
 };
 AppQuestion.propTypes = {
     question: PropTypes.object,
-    comments: PropTypes.array,
+    id: PropTypes.string,
 };
 const mapStateToProps = (state) => {
     let {
-        questionsReducer: { question, comments },
+        questionReducer: { question },
     } = state;
     return {
         question: question,
-        comments: comments,
     };
 };
 export default connect(mapStateToProps)(AppQuestion);

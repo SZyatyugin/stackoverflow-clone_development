@@ -2,7 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getQuestionsBySearch } from "../../App-services";
 const AppHeader = (props) => {
+    let [inputValue, setInputValue] = useState("");
+    let dispatch = useDispatch();
     let { isLoggedIn } = props;
     let userCheckLogin = isLoggedIn ? <UserLoggedin /> : <UserLoggedOut />;
     return (
@@ -15,10 +20,20 @@ const AppHeader = (props) => {
                         </div>
                     </Link>
                     <div className="app-header__search">
-                        <form>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                dispatch(getQuestionsBySearch(inputValue));
+                                setInputValue("");
+                            }}
+                        >
                             <input
                                 type="search"
                                 placeholder="Search all sites"
+                                value={inputValue}
+                                onChange={(e) => {
+                                    setInputValue(e.target.value);
+                                }}
                             ></input>
                         </form>
                     </div>

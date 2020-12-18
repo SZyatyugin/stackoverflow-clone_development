@@ -1,13 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import convertDate from "./convert-date";
 let getAllQuestions = createAsyncThunk(
     "questionsReducer/getAllQuestions",
     async (value) => {
-        let [order, sort] = value;
-        let url = `https://api.stackexchange.com/2.2/questions?order=${order}&sort=${sort}&site=stackoverflow&filter=!9_bDDxJY5`;
+        let { filter, order } = value;
+        let url = `https://api.stackexchange.com/2.2/questions?order=${order}&sort=${filter}&site=stackoverflow&filter=!9_bDDxJY5`;
         return await fetch(url)
-            .then((result) => {
-                return result.json();
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `Sorry. We've got an error. Response status ${response.status}. It's a bad request`
+                    );
+                }
+                return response.json();
             })
             .then((data) => {
                 return allQuestionsResponseTemplate(data);
@@ -15,11 +20,16 @@ let getAllQuestions = createAsyncThunk(
     }
 );
 let getQuestionById = createAsyncThunk(
-    "questionsReducer/getQuestionById",
-    async (id) => {
-        let url = `https://api.stackexchange.com/2.2/questions/${id}?order=desc&sort=votes&site=stackoverflow&filter=!9_bDDxJY5`;
+    "questionReducer/getQuestionById",
+    async (value) => {
+        let url = `https://api.stackexchange.com/2.2/questions/${value}?order=desc&sort=activity&site=stackoverflow&filter=!9_bDDxJY5`;
         return await fetch(url)
             .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `Sorry. We've got an error. Response status ${response.status}. It's a bad request`
+                    );
+                }
                 return response.json();
             })
             .then((data) => {
@@ -28,30 +38,38 @@ let getQuestionById = createAsyncThunk(
             });
     }
 );
-let getCommentsForQuestionById = createAsyncThunk(
-    "questionReducer/getCommentsForQuestionById",
-    async (id) => {
-        let url = `https://api.stackexchange.com/2.2/questions/${id}/comments?order=asc&sort=creation&site=stackoverflow&filter=!9_bDE0E4s`;
+let getQuestionsByTags = createAsyncThunk(
+    "questionsReducer/getQuestionsByTags",
+    async (value) => {
+        let { filter, order, tagIdForSearch } = value;
+        let url = `https://api.stackexchange.com/2.2/search/advanced?order=${order}&sort=${filter}&tagged=${tagIdForSearch}&site=stackoverflow`;
         return await fetch(url)
             .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `Sorry. We've got an error. Response status ${response.status}. It's a bad request`
+                    );
+                }
                 return response.json();
             })
-            .then((result) => {
-                return result.items.map((elem) => {
-                    return commentsResponseTemplate(elem);
-                });
+            .then((data) => {
+                return allQuestionsResponseTemplate(data);
             });
     }
 );
-let commentsResponseTemplate = (data) => {
-    return {
-        body: data.body,
-        comment_id: data.comment_id,
-        creation_date: convertDate(data.creation_date),
-        owner_display_name: data.owner.display_name,
-        owner_reputation: data.reputation,
-    };
-};
+let getQuestionsBySearch = createAsyncThunk(
+    "questionsReducer/getQuestionsBySearch",
+    async (value) => {
+        let url = `https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=${value}&site=stackoverflow`;
+        return fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                return allQuestionsResponseTemplate(data);
+            });
+    }
+);
 let questionResponseTemplate = (data) => {
     return {
         user_id: data.owner.user_id,
@@ -95,31 +113,9 @@ let allQuestionsResponseTemplate = (data) => {
     });
 };
 
-let convertDate = (value) => {
-    let date = new Date(value * 1000);
-    let months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
-    let day = date.getDay() < 10 ? `0${date.getDay()}` : `${date.getDay()}`;
-    let hours =
-        date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`;
-    let minutes =
-        date.getMinutes() < 10
-            ? `0${date.getMinutes()}`
-            : `${date.getMinutes()}`;
-    return `${hours}:${minutes} ${day} ${
-        months[date.getMonth()]
-    } ${date.getFullYear()}`;
+export {
+    getAllQuestions,
+    getQuestionById,
+    getQuestionsByTags,
+    getQuestionsBySearch,
 };
-export { getAllQuestions, getQuestionById, getCommentsForQuestionById };

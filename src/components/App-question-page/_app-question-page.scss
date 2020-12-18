@@ -1,0 +1,123 @@
+.app-question__section {
+    margin-left: 30px;
+}
+.question-page {
+    max-width: 800px;
+    margin: 30px auto 0 auto;
+}
+.question-header {
+    border-bottom: 1px solid lightgray;
+}
+.question-title {
+    font-size: 30px;
+    font-weight: bold;
+}
+.question-stats {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    font-size: 12px;
+    max-width: 500px;
+    justify-content: space-around;
+}
+.question-page__question-section {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.question-page__section-description {
+    max-width: 730px;
+    pre {
+        overflow-x: auto;
+        padding: 10px 0 10px 0;
+    }
+    img {
+        width: 100%;
+    }
+}
+.question-page__section-footer {
+    width: 100%;
+    margin: 30px 0;
+}
+.question-page__section-score {
+    margin: 20px 0 20px 0;
+    text-align: center;
+}
+.question-page__user {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+.question-page__user-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    img {
+        width: 100%;
+    }
+}
+.question-page__user-reputation {
+    margin-top: 10px;
+}
+.question-page__comments {
+    margin-top: 20px;
+}
+.question-page__comment {
+    padding: 10px 0;
+}
+.question-page__comment + .question-page__comment,
+.question-page__comment:first-child {
+    border-top: 1px solid lightgray;
+}
+.question-page__comment:last-child {
+    border-bottom: 1px solid lightgray;
+}
+.comment-owner {
+    font-weight: bold;
+}
+.comment-date {
+    color: lightgray;
+}
+.question-page__answers {
+    margin-top: 40px;
+}
+.question-page__answers-stats {
+    display: flex;
+    justify-content: space-between;
+}
+.question-page__answers-filters {
+    display: flex;
+}
+.answer-item {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 30px 0;
+    p {
+        img {
+            width: 50%;
+        }
+    }
+}
+.answer-item {
+    .question-page__section-vote {
+        .question-page___section-isanswered {
+            margin-top: 30px;
+            &:before {
+                content: "\2714";
+                font-size: 40px;
+                color: green;
+            }
+        }
+    }
+}
+.answer-item + .answer-item {
+    border-top: 1px solid lightgray;
+}
+.answer-item__section-description {
+    flex: 0 0 90%;
+}
+.question-page__user {
+    width: 100%;
+}

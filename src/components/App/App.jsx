@@ -1,22 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import AppHeader from "../App-header";
-import AppAuthHandler from "../App-authHandler";
+import { BrowserRouter as Router } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./App.scss";
-import AppQuestionsList from "../App-questions-list";
-import AppQuestion from "../App-question";
-
+import AppHeader from "../App-header";
+import AppPage from "../App-page";
 const App = () => {
     return (
         <Router>
             <div id="App">
                 <AppHeader />
-                <Switch>
-                    <Route path="?code=?" component={AppAuthHandler} />
-                    <Route exact path="/" component={AppQuestionsList} />
-                    <Route path="/questions/:id" component={AppQuestion} />
-                </Switch>
+                <AppPage />
             </div>
         </Router>
     );

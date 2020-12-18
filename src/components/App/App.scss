@@ -1,7 +1,11 @@
 @import "./reset";
 @import "../App-header/App-header";
-@import "../App-questions-list/appQuestionList";
-
+@import "../App-questions-list/app-question-list";
+@import "../App-question-page/app-question-page";
+@import "../App-page/app-page";
+@import "../App-navigation/app-navigation";
+@import "../App-users-page/app-users-page";
+@import "../App-tags-page/app-tags-page";
 @font-face {
     font-family: "Montserrat-ExtraLight";
     src: url("../../assets/fonts/Montserrat-ExtraLight.ttf");
