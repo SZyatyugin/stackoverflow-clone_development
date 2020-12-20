@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { getCommentsForQuestionById } from "../../App-services";
 import { useDispatch, useSelector } from "react-redux";
+import { getCommentsForQuestionById } from "../../App-services";
 import AppComment from "../App-comment";
 let AppQuestionComments = (props) => {
     let { id } = props;

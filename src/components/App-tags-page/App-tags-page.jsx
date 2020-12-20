@@ -2,10 +2,11 @@ import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { setTagPageFilter } from "../../App-store/reducers";
-import { getAllTags } from "../../App-services";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { setTagPageFilter } from "../../App-store/reducers";
+import { getAllTags } from "../../App-services";
+
 let AppTagsPage = (props) => {
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();

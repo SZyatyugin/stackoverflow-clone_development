@@ -7,16 +7,17 @@ let getUserById = createAsyncThunk("userReducer/getUserById", async (id) => {
             return response.json();
         })
         .then((data) => {
-            return data.items.find((elem) => {
-                return templateForUser(elem);
+            let user = data.items.find((elem) => {
+                return elem;
             });
+            return templateForUser(user);
         });
 });
 let getUserQuestionsById = createAsyncThunk(
     "userReducer/getUserQuestionsById",
     async (data) => {
         let { id, activeFilter } = data;
-        let url = `https://api.stackexchange.com/2.2/users/${id}/answers?order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDE(DzN`;
+        let url = `https://api.stackexchange.com/2.2/users/${id}/questions?pagesize=5&order=desc&sort=${activeFilter}&site=stackoverflow`;
         return await fetch(url)
             .then((response) => {
                 return response.json();
@@ -37,7 +38,7 @@ let getUserAnswersById = createAsyncThunk(
     "userReducer/getUserAnswersById",
     async (data) => {
         let { id, activeFilter } = data;
-        let url = `https://api.stackexchange.com/2.2/users/${id}/answers?order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDE(DzN`;
+        let url = `https://api.stackexchange.com/2.2/users/${id}/answers?pagesize=5&order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDE(DzN`;
         return await fetch(url)
             .then((response) => {
                 if (!response.ok) {
@@ -63,7 +64,7 @@ let getUserPostsById = createAsyncThunk(
     "userReducer/getUserPostsById",
     async (data) => {
         let { id, activeFilter } = data;
-        let url = `https://api.stackexchange.com/2.2/users/${id}/posts?order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDDt835`;
+        let url = `https://api.stackexchange.com/2.2/users/${id}/posts?pagesize=5&order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDDt835`;
         return await fetch(url)
             .then((response) => {
                 if (!response.ok) {
@@ -80,6 +81,9 @@ let getUserPostsById = createAsyncThunk(
                         post_id: elem.post_id,
                         score: elem.score,
                         title: elem.title,
+                        last_activity_date: convertDate(
+                            elem.last_activity_date
+                        ),
                     };
                 });
             });
@@ -88,8 +92,7 @@ let getUserPostsById = createAsyncThunk(
 let getUserTopTags = createAsyncThunk(
     "userReducer/getUserTopTags",
     async (id) => {
-        console.log(id);
-        let url = `https://api.stackexchange.com/2.2/users/${id}/top-tags?site=stackoverflow`;
+        let url = `https://api.stackexchange.com/2.2/users/${id}/top-tags?pagesize=5&site=stackoverflow&filter=!9_bDE.B6I`;
         return await fetch(url)
             .then((response) => {
                 if (!response.ok) {
@@ -113,11 +116,35 @@ let getUserTopTags = createAsyncThunk(
             });
     }
 );
+let getMyAccount = createAsyncThunk(
+    "tokenReducer/getMyAccount",
+    async (token) => {
+        let url = `https://api.stackexchange.com/2.2/me?order=desc&sort=reputation&site=stackoverflow&filter=!--1nZv)fAzeX&key=wsIZYqmzzlvamta3lpmnnQ((&access_token=${token}`;
+        return await fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `Sorry. We've got an error. Response status ${response.status}. It's a bad request`
+                    );
+                }
+                return response.json();
+            })
+            .then((data) => {
+                let user = data.items.find((elem) => {
+                    return elem;
+                });
+                return templateForUser(user);
+            })
+            .catch((error) => {
+                return error;
+            });
+    }
+);
 let templateForUser = (data) => {
     return {
         badge_counts_bronze: data.badge_counts.bronze,
-        badge_counts_silver: data.badge_counts_silver,
-        badge_counts_gold: data.badge_counts_gold,
+        badge_counts_silver: data.badge_counts.silver,
+        badge_counts_gold: data.badge_counts.gold,
         view_count: data.view_count,
         answer_count: data.answer_count,
         question_count: data.question_count,
@@ -138,4 +165,5 @@ export {
     getUserAnswersById,
     getUserPostsById,
     getUserTopTags,
+    getMyAccount,
 };

@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import AppQuestionsList from "../App-questions-list";
 import AppQuestionPage from "../App-question-page";
 import AppNavigation from "../App-navigation";
-import AppAuthHandler from "../App-authHandler";
 import AppUsersPage from "../App-users-page";
 import AppTagsPage from "../App-tags-page";
 import AppUserPage from "../App-user-page";
@@ -14,7 +13,6 @@ const AppPage = () => {
                 <div className="app-section__wrapper">
                     <AppNavigation />
                     <Switch>
-                        <Route path="?code=?" component={AppAuthHandler} />
                         <Route exact path="/" component={AppQuestionsList} />
                         <Route
                             exact

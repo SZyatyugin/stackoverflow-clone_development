@@ -10,6 +10,7 @@ import {
 } from "./App-comments-services";
 import { getAnswersById } from "./App-answers-services";
 import AppRegistrationServices from "./App-registration-services";
+import { finishRegistration } from "./App-registration-services";
 import { getAllUsers } from "./App-users-services";
 import { getAllTags } from "./App-tags-services";
 import {
@@ -18,6 +19,7 @@ import {
     getUserAnswersById,
     getUserPostsById,
     getUserTopTags,
+    getMyAccount,
 } from "./App-user-services";
 export {
     AppRegistrationServices,
@@ -35,4 +37,6 @@ export {
     getUserAnswersById,
     getUserPostsById,
     getUserTopTags,
+    getMyAccount,
+    finishRegistration,
 };

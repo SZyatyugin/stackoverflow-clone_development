@@ -12,16 +12,19 @@ const userReducer = createSlice({
         loading: "idle",
         error: null,
         user: {},
-        questions: [],
-        answers: [],
         posts: [],
         tags: [],
         activeFilter: "votes",
         filters: ["votes", "creation"],
+        sortList: ["All", "Questions", "Answers"],
+        sortListItem: "All",
     },
     reducers: {
         setFilter: (state, actions) => {
             state.activeFilter = actions.payload;
+        },
+        setSortListItem: (state, action) => {
+            state.sortListItem = action.payload;
         },
     },
     extraReducers: {
@@ -40,6 +43,7 @@ const userReducer = createSlice({
         [getUserTopTags.pending]: (state) => {
             state.loading = "pending";
         },
+
         [getUserById.fulfilled]: (state, action) => {
             state.loading = "idle";
             state.user = action.payload;
@@ -50,16 +54,17 @@ const userReducer = createSlice({
         },
         [getUserQuestionsById.fulfilled]: (state, action) => {
             state.loading = "idle";
-            state.questions = action.payload;
+            state.posts = action.payload;
         },
         [getUserAnswersById.fulfilled]: (state, action) => {
             state.loading = "idle";
-            state.answers = action.payload;
+            state.posts = action.payload;
         },
         [getUserTopTags.fulfilled]: (state, action) => {
             state.loading = "idle";
             state.tags = action.payload;
         },
+
         [getUserById.rejected]: (state, action) => {
             state.loading = "idle";
             state.error = action.payload;
@@ -82,5 +87,6 @@ const userReducer = createSlice({
         },
     },
 });
-export const { setFilter } = userReducer.actions;
+
+export const { setFilter, setSortListItem } = userReducer.actions;
 export default userReducer.reducer;

@@ -1,15 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { getQuestionsBySearch } from "../../App-services";
+import AppUserLoggedIn from "./App-user-logged-in";
+import AppUserLoggedOut from "./App-user-logged-out";
+import AppLoginHOC from "../App-HOC";
 const AppHeader = (props) => {
+    let { isLoggedIn } = props;
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();
-    let { isLoggedIn } = props;
-    let userCheckLogin = isLoggedIn ? <UserLoggedin /> : <UserLoggedOut />;
+
+    let userCheckLogin = isLoggedIn ? (
+        <AppUserLoggedIn />
+    ) : (
+        <AppUserLoggedOut />
+    );
     return (
         <div className="app-header">
             <div className="container">
@@ -45,30 +52,17 @@ const AppHeader = (props) => {
         </div>
     );
 };
+
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: !!state.tokenReducer.token,
+        token: state.tokenReducer.token,
     };
 };
+export default AppLoginHOC(connect(mapStateToProps)(AppHeader));
 
-export default connect(mapStateToProps)(AppHeader);
 AppHeader.propTypes = {
     isLoggedIn: PropTypes.bool,
-};
-const UserLoggedin = () => {
-    return (
-        <div className="app-header__login">
-            <div className="app-header__user-icon"></div>
-            <div className="app-header__user-username"></div>
-        </div>
-    );
-};
-const UserLoggedOut = () => {
-    return (
-        <div className="app-header__login">
-            <button className="btn">
-                <span className="badge badge-primary">login</span>
-            </button>
-        </div>
-    );
+    token: PropTypes.string,
+    appLoginServices: PropTypes.object,
 };
