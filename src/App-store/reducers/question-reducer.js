@@ -10,14 +10,14 @@ const questionReducer = createSlice({
     reducers: {},
     extraReducers: {
         [getQuestionById.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getQuestionById.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.question = action.payload;
         },
         [getQuestionById.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },

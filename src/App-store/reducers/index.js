@@ -9,7 +9,7 @@ import questionCommentsReducer from "./question-comments-reducer";
 import usersReducer from "./users-reducer";
 import { setUsersPageFilter, setUsersPageOrder } from "./users-reducer";
 import tagsReducer from "./tags-reducer";
-import setTagPageFilter from "./tags-reducer";
+import { setTagPageFilter } from "./tags-reducer";
 import userReducer from "./user-reducer";
 import { setFilter, setSortListItem } from "./user-reducer";
 export {

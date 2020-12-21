@@ -2,16 +2,19 @@ import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getQuestionsBySearch } from "../../App-services";
 import AppUserLoggedIn from "./App-user-logged-in";
 import AppUserLoggedOut from "./App-user-logged-out";
 import AppLoginHOC from "../App-HOC";
+import { getToken } from "../../App-store/reducers";
 const AppHeader = (props) => {
     let { isLoggedIn } = props;
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();
-
+    useEffect(() => {
+        dispatch(getToken());
+    }, []);
     let userCheckLogin = isLoggedIn ? (
         <AppUserLoggedIn />
     ) : (
@@ -21,11 +24,13 @@ const AppHeader = (props) => {
         <div className="app-header">
             <div className="container">
                 <div className="app-header__wrapper">
-                    <Link to="/">
-                        <div className="app-header__title">
+                    <div className="app-header__title">
+                        <Link to="/">
+                            {" "}
                             <h2>Stackoveflow Clone</h2>
-                        </div>
-                    </Link>
+                        </Link>
+                    </div>
+
                     <div className="app-header__search">
                         <form
                             onSubmit={(e) => {
@@ -56,13 +61,11 @@ const AppHeader = (props) => {
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: !!state.tokenReducer.token,
-        token: state.tokenReducer.token,
     };
 };
 export default AppLoginHOC(connect(mapStateToProps)(AppHeader));
 
 AppHeader.propTypes = {
     isLoggedIn: PropTypes.bool,
-    token: PropTypes.string,
     appLoginServices: PropTypes.object,
 };

@@ -6,10 +6,10 @@ import AppAnswers from "../App-answers";
 let AppQuestionPage = () => {
     let match = useRouteMatch();
     return (
-        <React.Fragment>
+        <div className="question-page">
             <AppQuestion id={match.params.id} />
             <AppAnswers id={match.params.id} />
-        </React.Fragment>
+        </div>
     );
 };
 export default AppQuestionPage;

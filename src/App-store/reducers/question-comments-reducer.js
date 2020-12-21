@@ -10,14 +10,14 @@ const questionCommentsReducer = createSlice({
     reducer: {},
     extraReducers: {
         [getCommentsForQuestionById.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getCommentsForQuestionById.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.comments = action.payload;
         },
         [getCommentsForQuestionById.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },

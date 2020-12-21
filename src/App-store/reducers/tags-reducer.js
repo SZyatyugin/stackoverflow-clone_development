@@ -6,7 +6,7 @@ const tagsReducer = createSlice({
         error: null,
         loading: "idle",
         tags: [],
-        tagsPageFilters: ["popular", "name", "new"],
+        tagsPageFilters: ["popular", "name", "activity"],
         activeFilter: "popular",
     },
     reducers: {
@@ -16,17 +16,17 @@ const tagsReducer = createSlice({
     },
     extraReducers: {
         [getAllTags.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getAllTags.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.tags = action.payload;
         },
         [getAllTags.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },
 });
-export const setTagPageFilter = tagsReducer.actions;
+export const { setTagPageFilter } = tagsReducer.actions;
 export default tagsReducer.reducer;

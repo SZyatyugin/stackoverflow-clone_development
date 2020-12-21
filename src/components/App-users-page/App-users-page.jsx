@@ -7,9 +7,12 @@ import {
     setUsersPageFilter,
     setUsersPageOrder,
 } from "../../App-store/reducers";
+import AppLoadingPage from "../App-loading-page";
+import AppErrorPage from "../App-error-page";
 
 let AppUsersPage = () => {
     let [inputValue, getInputValue] = useState(null);
+    let dispatch = useDispatch();
     let users = useSelector((state) => {
         let {
             usersReducer: { users },
@@ -29,15 +32,17 @@ let AppUsersPage = () => {
     }, shallowEqual);
     let data = useSelector((state) => {
         let {
-            usersReducer: { activeFilter, filters, order },
+            usersReducer: { activeFilter, filters, order, loading },
         } = state;
-        return { activeFilter, filters, order };
+        return { activeFilter, filters, order, loading };
     }, shallowEqual);
-    let dispatch = useDispatch();
-    let { activeFilter, order, filters } = data;
+    let { activeFilter, order, filters, loading } = data;
     useEffect(() => {
         dispatch(getAllUsers([order, activeFilter]));
     }, [activeFilter, order]);
+    let loadingHandler = loading === "loading" ? <AppLoadingPage /> : null;
+    let errorHandler = loading === "failed" ? <AppErrorPage /> : null;
+    let hasData = !(loadingHandler || errorHandler);
     let usersItem = users.map((elem, index) => {
         return (
             <div className="app-users__item" key={index}>
@@ -71,6 +76,7 @@ let AppUsersPage = () => {
             </div>
         );
     });
+    let content = hasData ? usersItem : null;
     return (
         <div className="app-users__section page-section">
             <div className="app-users__section-header">
@@ -122,7 +128,9 @@ let AppUsersPage = () => {
                     </ul>
                 </div>
             </div>
-            <div className="app-users__list">{usersItem}</div>
+            <div className="app-users__list">
+                {loadingHandler} {errorHandler} {content}
+            </div>
         </div>
     );
 };

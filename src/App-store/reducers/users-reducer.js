@@ -21,14 +21,14 @@ const usersReducer = createSlice({
     },
     extraReducers: {
         [getAllUsers.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getAllUsers.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.users = action.payload;
         },
         [getAllUsers.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },

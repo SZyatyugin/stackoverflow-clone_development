@@ -1,0 +1,192 @@
+@media (max-width: 320px) {
+    .page-section {
+        padding: 0;
+    }
+
+    .question-item__stats {
+        display: none;
+    }
+
+    .app-navigation {
+        width: 55px;
+    }
+
+    .tag-item {
+        width: 90%;
+    }
+}
+
+@media (max-width: 350px) {
+    .app-user__information-logo {
+        width: 200px;
+    }
+}
+
+@media (max-width: 560px) {
+    .app-header {
+        height: unset;
+
+        .app-header__wrapper {
+            display: block;
+        }
+    }
+
+    .app-header__login-status {
+        width: fit-content;
+        margin: 10px auto;
+    }
+
+    .page-section {
+        width: 85%;
+    }
+
+    .question-filters {
+        font-size: 10px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+
+        .filters-item {
+            margin-top: 5px;
+            padding: 10px;
+        }
+
+        .arrow-down,
+        .arrow-up {
+            width: unset;
+        }
+    }
+
+    .question-item__section {
+        margin-left: 2px;
+        font-size: 10px;
+    }
+
+    .question-item__user {
+        flex-flow: row wrap;
+    }
+
+    .question-item__stats {
+        flex-flow: column;
+    }
+
+    .app-tags__section-filters {
+        flex-flow: row wrap;
+    }
+
+    .app-tags__input {
+        width: 100%;
+
+        input {
+            width: 90%;
+        }
+    }
+
+    .app-tags__filters {
+        margin-top: 10px;
+    }
+
+    .app-users__item-wrapper {
+        justify-content: center;
+    }
+
+    .app-users__filters {
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    .filters-item {
+        margin-top: 5px;
+    }
+
+    .app-user__posts-filter {
+        flex-flow: row wrap;
+    }
+
+    .app-user__information-about {
+        min-width: unset;
+    }
+
+    .app-user__information-about,
+    .app-user__information-account {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 650px) {
+    .filters-item {
+        padding: 5px;
+    }
+
+    .app-user__posts-filter-items {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+        .filters-item {
+            margin-top: 5px;
+        }
+    }
+}
+
+@media (max-width: 750px) {
+    .question-filters {
+        margin-top: 5px;
+        justify-content: center;
+    }
+
+    .question-item {
+        padding: 10px;
+    }
+
+    .question-item__stats-elem {
+        padding: 5px;
+    }
+
+    .question-item__section {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .app-user__information {
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    .app-user__information-about {
+        border-right: none;
+    }
+
+    .app-user__information-account {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 860px) {
+    .app-users__section-filters {
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    .app-user__input {
+        width: 100%;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .app-users__filters-wrapper {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 950px) {
+    .question__item-tags {
+        flex: 100%;
+    }
+
+    .question-item__user {
+        margin-top: 10px;
+    }
+}

@@ -2,11 +2,12 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector, shallowEqual } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AppLoginHOC from "../App-HOC";
 import { getMyAccount } from "../../App-services";
 import { LogOut } from "../../App-store/reducers";
 const AppUserLoggedIn = () => {
+    let history = useHistory();
     let dispatch = useDispatch();
     let data = useSelector((state) => {
         let {
@@ -15,8 +16,6 @@ const AppUserLoggedIn = () => {
         return { currentUserAccount, token };
     }, shallowEqual);
     let { currentUserAccount, token } = data;
-    console.log(currentUserAccount);
-    console.log(token);
     useEffect(() => {
         dispatch(getMyAccount(token));
     }, [token]);
@@ -37,6 +36,7 @@ const AppUserLoggedIn = () => {
                     className="btn"
                     onClick={() => {
                         dispatch(LogOut());
+                        history.push("/");
                     }}
                 >
                     <span className="badge badge-primary">log out</span>

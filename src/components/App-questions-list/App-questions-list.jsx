@@ -1,28 +1,28 @@
 import React from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { withRouter } from "react-router-dom";
-import { useMemo } from "react";
 import PropTypes from "prop-types";
 import AppQuestionsListItems from "../App-questions-list-items/index";
 import { getAllQuestions, getQuestionsByTags } from "../../App-services";
 import { setFilter, setOrder } from "../../App-store/reducers/filter-reducer";
-
+import AppLoadingPage from "../App-loading-page";
+import AppErrorPage from "../App-error-page";
 const AppQuestionsList = ({ match }) => {
     let tagIdForSearch = match.params?.id;
     let data = useSelector((state) => {
         let {
             filterReducer: { activeFilter, order, filters },
-            questionsReducer: { allQuestions },
+            questionsReducer: { loading },
         } = state;
         return {
             filters: filters,
             filter: activeFilter,
             order: order,
-            allQuestions: allQuestions,
+            loading: loading,
         };
     }, shallowEqual);
-    let { filter, order, filters } = data;
+    let { filter, order, filters, loading } = data;
     let dataForRequest = useMemo(
         () => ({
             filter,
@@ -39,6 +39,10 @@ const AppQuestionsList = ({ match }) => {
             dispatch(getAllQuestions(dataForRequest));
         }
     }, [dataForRequest]);
+    let loadingHandler = loading === "loading" ? <AppLoadingPage /> : null;
+    let errorHandler = loading === "failed" ? <AppErrorPage /> : null;
+    let hasData = !(loadingHandler || errorHandler);
+    let content = hasData ? <AppQuestionsListItems /> : null;
 
     return (
         <div className="app-questions__section page-section">
@@ -81,7 +85,9 @@ const AppQuestionsList = ({ match }) => {
                 </ul>
             </div>
             <div className="app-questions-section">
-                <AppQuestionsListItems />
+                {content}
+                {loadingHandler}
+                {errorHandler}
             </div>
         </div>
     );

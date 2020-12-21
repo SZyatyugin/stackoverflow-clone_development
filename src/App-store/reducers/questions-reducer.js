@@ -14,36 +14,36 @@ const questionsReducer = createSlice({
     reducers: {},
     extraReducers: {
         [getAllQuestions.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getAllQuestions.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.allQuestions = action.payload;
         },
         [getAllQuestions.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
         [getQuestionsByTags.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getQuestionsByTags.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.allQuestions = action.payload;
         },
         [getQuestionsByTags.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
         [getQuestionsBySearch.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getQuestionsBySearch.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.allQuestions = action.payload;
         },
         [getQuestionsBySearch.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },

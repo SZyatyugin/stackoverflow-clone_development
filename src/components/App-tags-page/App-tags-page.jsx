@@ -6,11 +6,18 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { setTagPageFilter } from "../../App-store/reducers";
 import { getAllTags } from "../../App-services";
-
+import AppLoadingPage from "../App-loading-page";
+import AppErrorPage from "../App-error-page";
 let AppTagsPage = (props) => {
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();
-    let { activeFilter, tagsPageFilters, tagsData } = props;
+    let {
+        activeFilter,
+        tagsPageFilters,
+        tagsData,
+        loading,
+        setTagPageFilter,
+    } = props;
     useEffect(() => {
         dispatch(getAllTags(activeFilter));
     }, [activeFilter]);
@@ -21,7 +28,28 @@ let AppTagsPage = (props) => {
         if (elem.name.indexOf(inputValue) > -1) {
             return elem;
         }
+    }, []);
+    let loadingHandler = loading === "loading" ? <AppLoadingPage /> : null;
+    let errorHandler = loading === "failed" ? <AppErrorPage /> : null;
+    let hasData = !(loadingHandler || errorHandler);
+    let dataTags = tags.map((elem, index) => {
+        return (
+            <li className="tag-item" key={index}>
+                <div className="tag-title">
+                    <Link to={`/questions/tag/${elem.name}`}>{elem.name}</Link>
+                </div>
+                <div className="tag-description">
+                    You can find additional information by {elem.name} tag
+                </div>
+                <div className="tag-stats">
+                    <div className="tag-stats__count">
+                        {elem.count} questions
+                    </div>
+                </div>
+            </li>
+        );
     });
+    let content = hasData ? dataTags : null;
     return (
         <div className="app-tags__section page-section">
             <div className="app-tags__section-header">
@@ -67,26 +95,9 @@ let AppTagsPage = (props) => {
                 </div>
             </div>
             <div className="app-tags__section-items">
-                {tags.map((elem, index) => {
-                    return (
-                        <div className="tag-item" key={index}>
-                            <div className="tag-title">
-                                <Link to={`/questions/tag/${elem.name}`}>
-                                    {elem.name}
-                                </Link>
-                            </div>
-                            <div className="tag-description">
-                                You can find additional information by{" "}
-                                {elem.name} tag
-                            </div>
-                            <div className="tag-stats">
-                                <div className="tag-stats__count">
-                                    {elem.count} questions
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                {content}
+                {loadingHandler}
+                {errorHandler}
             </div>
         </div>
     );
@@ -95,21 +106,24 @@ AppTagsPage.propTypes = {
     tagsData: PropTypes.array,
     activeFilter: PropTypes.string,
     tagsPageFilters: PropTypes.array,
+    loading: PropTypes.string,
     tagWiki: PropTypes.array,
+    setTagPageFilter: PropTypes.func,
 };
 const mapStateToProps = (state) => {
     let {
-        tagsReducer: { tags, activeFilter, tagsPageFilters },
+        tagsReducer: { tags, activeFilter, tagsPageFilters, loading },
     } = state;
     return {
         tagsData: tags,
         activeFilter: activeFilter,
         tagsPageFilters: tagsPageFilters,
+        loading: loading,
     };
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        setTagsPageFilter: (value) => {
+        setTagPageFilter: (value) => {
             dispatch(setTagPageFilter(value));
         },
     };

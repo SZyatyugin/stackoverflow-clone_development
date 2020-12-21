@@ -17,14 +17,14 @@ const answersReducer = createSlice({
     },
     extraReducers: {
         [getAnswersById.pending]: (state) => {
-            state.loading = "pending";
+            state.loading = "loading";
         },
         [getAnswersById.fulfilled]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "succeeded";
             state.answersById = action.payload;
         },
         [getAnswersById.rejected]: (state, action) => {
-            state.loading = "idle";
+            state.loading = "failed";
             state.error = action.payload;
         },
     },
