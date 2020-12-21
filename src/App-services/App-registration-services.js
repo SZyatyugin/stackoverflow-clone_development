@@ -7,7 +7,7 @@ export default class AppRegistrationServices extends React.Component {
         let params = {
             client_id: 19244,
             scope: "write_access",
-            redirect_uri: "https://szyatyugin.github.io/",
+            redirect_uri: "https://szyatyugin.github.io/stackoverflow-clone/",
         };
         let url = `${base_url}${qs.stringify(params)}`;
         location = url;
@@ -22,7 +22,7 @@ let finishRegistration = createAsyncThunk(
             client_id: 19244,
             client_secret: "ybUFsFqqDiW9Rs2A7ZIgRA((",
             code: data,
-            redirect_uri: "https://szyatyugin.github.io/",
+            redirect_uri: "https://szyatyugin.github.io/stackoverflow-clone/",
         };
         return await fetch(proxyURL + urlForAuth, {
             method: "POST",
