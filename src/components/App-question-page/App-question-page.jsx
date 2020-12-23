@@ -5,10 +5,13 @@ import AppAnswers from "../App-answers";
 
 let AppQuestionPage = () => {
     let match = useRouteMatch();
+    let {
+        params: { id },
+    } = match;
     return (
         <div className="question-page">
-            <AppQuestion id={match.params.id} />
-            <AppAnswers id={match.params.id} />
+            <AppQuestion id={id} />
+            <AppAnswers id={id} />
         </div>
     );
 };

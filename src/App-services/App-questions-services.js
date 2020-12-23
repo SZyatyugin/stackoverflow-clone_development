@@ -22,7 +22,6 @@ let getAllQuestions = createAsyncThunk(
 let getQuestionById = createAsyncThunk(
     "questionReducer/getQuestionById",
     async (value) => {
-        console.log("question render");
         let url = `https://api.stackexchange.com/2.2/questions/${value}?order=desc&sort=activity&site=stackoverflow&filter=!9_bDDxJY5`;
         return await fetch(url)
             .then((response) => {

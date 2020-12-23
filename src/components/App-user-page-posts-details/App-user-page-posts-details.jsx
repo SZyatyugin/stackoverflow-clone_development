@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import {
     getUserQuestionsById,
     getUserAnswersById,
@@ -21,6 +22,7 @@ let AppUserPagePostsDetails = (props) => {
                 sortListItem,
             },
         } = state;
+
         return {
             posts,
             activeFilter,
@@ -50,6 +52,7 @@ let AppUserPagePostsDetails = (props) => {
                 break;
         }
     }, [dataForRequest, sortListItem]);
+
     return (
         <div className="app-user__posts">
             <div className="app-user__posts-filter">
@@ -106,9 +109,11 @@ let AppUserPagePostsDetails = (props) => {
                         return (
                             <li key={index} className="posts-item">
                                 <div className={elemClass}>{elem.score}</div>
-                                <div className="posts-item__title">
-                                    {elem.title}
-                                </div>
+                                <Link to={`/questions/${elem.question_id}`}>
+                                    <div className="posts-item__title">
+                                        {elem.title}
+                                    </div>
+                                </Link>
                             </li>
                         );
                     })}

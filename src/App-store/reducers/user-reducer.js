@@ -31,6 +31,7 @@ const userReducer = createSlice({
         [getUserById.pending]: (state) => {
             state.loading = "loading";
         },
+
         [getUserPostsById.pending]: (state) => {
             state.loading = "loading";
         },
@@ -63,7 +64,6 @@ const userReducer = createSlice({
             state.loading = "succeeded";
             state.tags = action.payload;
         },
-
         [getUserById.rejected]: (state, action) => {
             state.loading = "failed";
             state.error = action.payload;

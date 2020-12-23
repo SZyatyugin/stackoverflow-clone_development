@@ -28,7 +28,7 @@ let getUserQuestionsById = createAsyncThunk(
                         is_answered: elem.is_answered,
                         score: elem.score,
                         title: elem.title,
-                        question_id: elem.question_id,
+                        id: elem.question_id,
                     };
                 });
             });
@@ -54,7 +54,7 @@ let getUserAnswersById = createAsyncThunk(
                         is_answered: elem.is_answered,
                         score: elem.score,
                         title: elem.title,
-                        question_id: elem.question_id,
+                        id: elem.question_id,
                     };
                 });
             });
@@ -65,7 +65,7 @@ let getUserPostsById = createAsyncThunk(
     async (data) => {
         let { id, activeFilter } = data;
         let url = `https://api.stackexchange.com/2.2/users/${id}/posts?pagesize=5&order=desc&sort=${activeFilter}&site=stackoverflow&filter=!9_bDDt835`;
-        return await fetch(url)
+        let dataPosts = await fetch(url)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(
@@ -78,7 +78,8 @@ let getUserPostsById = createAsyncThunk(
                 return data.items.map((elem) => {
                     return {
                         user_id: elem.user_id,
-                        post_id: elem.post_id,
+                        id: elem.post_id,
+                        post_type: elem.post_type,
                         score: elem.score,
                         title: elem.title,
                         last_activity_date: convertDate(
@@ -87,6 +88,28 @@ let getUserPostsById = createAsyncThunk(
                     };
                 });
             });
+        let promise = dataPosts.map((elem) => {
+            if (elem.post_type === "answer") {
+                let url = `https://api.stackexchange.com/2.2/answers/${elem.id}?order=desc&sort=creation&site=stackoverflow`;
+                return fetch(url)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((result) => {
+                        let data = result.items.find((elem) => {
+                            return elem;
+                        });
+                        return {
+                            ...elem,
+                            ...{ question_id: data.question_id },
+                        };
+                    });
+            }
+            return elem;
+        });
+        return Promise.all(promise).then((response) => {
+            return response;
+        });
     }
 );
 let getUserTopTags = createAsyncThunk(
@@ -140,6 +163,7 @@ let getMyAccount = createAsyncThunk(
             });
     }
 );
+
 let templateForUser = (data) => {
     return {
         badge_counts_bronze: data.badge_counts.bronze,

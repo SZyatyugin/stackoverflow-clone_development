@@ -1,7 +1,8 @@
 import React from "react";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import PropTypes from "prop-types";
 import qs from "qs";
-export default class AppRegistrationServices extends React.Component {
+class AppRegistrationServices extends React.Component {
     getCodeForLogin() {
         const base_url = "https://stackoverflow.com/oauth/?";
         let params = {
@@ -13,6 +14,10 @@ export default class AppRegistrationServices extends React.Component {
         location = url;
     }
 }
+AppRegistrationServices.propTypes = {
+    history: PropTypes.object,
+    match: PropTypes.object,
+};
 let finishRegistration = createAsyncThunk(
     "tokenReducer/finishRegistration",
     async (data) => {
@@ -51,4 +56,5 @@ let finishRegistration = createAsyncThunk(
             });
     }
 );
+export default AppRegistrationServices;
 export { finishRegistration };

@@ -8,9 +8,13 @@ import AppComment from "../App-comment";
 let AppAnswersComments = (props) => {
     let { id } = props;
     let dispatch = useDispatch();
-    let comments = useSelector((state) => {
-        return state.answersCommentsReducer.comments;
+    let data = useSelector((state) => {
+        let {
+            answersCommentsReducer: { comments },
+        } = state;
+        return { comments };
     });
+    let { comments } = data;
     useEffect(() => {
         dispatch(getCommentsForAnswersById(id));
     }, [id]);

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import AppAnswersComments from "../App-answers-comments";
@@ -9,9 +9,12 @@ import { setAnswersActiveFilter } from "../../App-store/reducers/answers-reducer
 let AppAnswers = (props) => {
     let { answersList, answersFilters, id, answersActiveFilter } = props;
     let dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getAnswersById([id, answersActiveFilter]));
+    let dataForRequest = useMemo(() => {
+        id, answersActiveFilter;
     }, [id, answersActiveFilter]);
+    useEffect(() => {
+        dispatch(getAnswersById(dataForRequest));
+    }, [dataForRequest]);
     let answers = answersList.map((elem, index) => {
         let acceptedAnswer = elem.is_accepted ? (
             <div className="question-page___section-isanswered"></div>

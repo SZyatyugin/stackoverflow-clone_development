@@ -7,9 +7,13 @@ import AppComment from "../App-comment";
 let AppQuestionComments = (props) => {
     let { id } = props;
     let dispatch = useDispatch();
-    let comments = useSelector((state) => {
-        return state.questionCommentsReducer.comments;
+    let data = useSelector((state) => {
+        let {
+            questionCommentsReducer: { comments },
+        } = state;
+        return { comments };
     });
+    let { comments } = data;
     useEffect(() => {
         dispatch(getCommentsForQuestionById(id));
     }, [id]);
