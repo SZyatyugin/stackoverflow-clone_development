@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { getQuestionsBySearch } from "../../App-services";
@@ -9,6 +9,7 @@ import AppUserLoggedOut from "./App-user-logged-out";
 import AppLoginHOC from "../App-HOC";
 import { getToken } from "../../App-store/reducers";
 const AppHeader = (props) => {
+    let history = useHistory();
     let { isLoggedIn } = props;
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();
@@ -37,6 +38,7 @@ const AppHeader = (props) => {
                                 e.preventDefault();
                                 dispatch(getQuestionsBySearch(inputValue));
                                 setInputValue("");
+                                history.push("/");
                             }}
                         >
                             <input
