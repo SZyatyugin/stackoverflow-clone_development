@@ -1,6 +1,5 @@
 import React from "react";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import PropTypes from "prop-types";
 import qs from "qs";
 class AppRegistrationServices extends React.Component {
     getCodeForLogin() {
@@ -14,10 +13,6 @@ class AppRegistrationServices extends React.Component {
         location = url;
     }
 }
-AppRegistrationServices.propTypes = {
-    history: PropTypes.object,
-    match: PropTypes.object,
-};
 let finishRegistration = createAsyncThunk(
     "tokenReducer/finishRegistration",
     async (data) => {
