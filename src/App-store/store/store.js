@@ -14,16 +14,16 @@ import {
 
 const store = configureStore({
     reducer: {
-        tokenReducer: tokenReducer,
-        answersReducer: answersReducer,
-        questionsReducer: questionsReducer,
-        questionReducer: questionReducer,
-        answersCommentsReducer: answersCommentsReducer,
-        questionCommentsReducer: questionCommentsReducer,
-        filterReducer: filterReducer,
-        usersReducer: usersReducer,
-        tagsReducer: tagsReducer,
-        userReducer: userReducer,
+        tokenReducer,
+        answersReducer,
+        questionsReducer,
+        questionReducer,
+        answersCommentsReducer,
+        questionCommentsReducer,
+        filterReducer,
+        usersReducer,
+        tagsReducer,
+        userReducer,
     },
 });
 export default store;
